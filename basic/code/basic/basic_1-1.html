@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="test.js" defer></script>
+  <title>Document</title>
+  <style>
+    .heading{
+      color: aqua;
+    }
+    
+  </style>
+</head>
+<body>
+  <!-- <h1>hello</h1>
+  <div class="heading">hello</div>
+  <div class="basicTest">hello</div>
+  <div class="htmlChange">hello</div>
+  <p class="domChange">hello</p> -->
+
+  <h1 class="heading">DOM</h1>
+  <a href="https://www.google.com/">google</a>
+  <p class="content">content1</p>
+  <p class="content">content2</p>
+  <p class="content">content3</p>
+  <ui>
+    <li>list1</li>
+    <li>list2</li>
+  </ui>
+
+<script>
+  // classList 메서드
+  // const h1Tag = document.querySelector('.heading')
+  // console.log(h1Tag.classList)
+
+  // h1Tag.classList.add('red')
+  // console.log(h1Tag.classList)
+
+  // h1Tag.classList.remove('red')
+  // console.log(h1Tag.classList)
+
+  // h1Tag.classList.toggle('red')
+  // console.log(h1Tag.classList)
+
+
+  // 일반 속성 조작
+  // const aTag = document.querySelector('.basicTest')
+  // console.log(aTag.getAttribute('href'))
+
+  // aTag.setAttribute('href', 'https://www.naver.com/')
+  // console.log(aTag.getAttribute('href'))
+
+  // aTag.removeAttribute('href')
+  // console.log(aTag.getAttribute('href'))
+
+
+  // html 콘텐츠 조작
+  // const h1Tag = document.querySelector('.htmlChange')
+  // console.log(h1Tag.textContent)
+
+  // h1Tag.textContent = 'hello -> 수정된 내용'
+  // console.log(h1Tag.textContent)
+
+
+  // dom 요소 조작
+  // //생성
+  // const h1Tag = document.createElement('h1')
+  // h1Tag.textContent = '제목으로 수정'
+  // console.log(h1Tag)
+
+  // // 추가
+  // const divTag = document.querySelector('div')
+  // divTag.appendChild(h1Tag)
+  // console.log(divTag)
+
+  // // 삭제
+  // const pTag = document.querySelector('p')
+  // divTag.removeChild(pTag)
+
+
+  // style 조작
+  // const pTag = document.querySelector('p')
+  // pTag.style.color = 'blue'
+  // pTag.style.fontSize = '2rem'
+  // pTag.style.border = '1px solid black'
+  // console.log(pTag.style)
+
+
+  // DOM 선택 실습
+  console.log(document.querySelector('.heading'))
+  console.log(document.querySelector('.content'))
+  console.log(document.querySelectorAll('.content'))
+  console.log(document.querySelectorAll('.ui > li'))
+
+</script>
+
+</body>
+</html>
