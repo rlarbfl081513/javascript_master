@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 선언식 
+    // function add(a,b){
+    //   return a+b
+    // }
+
+    // function subtract(a,b){
+    //   return a-b
+    // }
+
+    // function multiply(a,b){
+    //   return a*b
+    // }
+
+
+    // 표현식
+    // const add = function(a,b){
+    //   return a+b
+    // }
+
+    // const subtract = function(a,b){
+    //   return a-b
+    // }
+
+    // const multiply = function(a,b){
+    //   return a*b
+    // }
+
+    //화살표 함수
+    // const multiply = function(a,b){
+    //   return a*b
+    // }
+
+
+    // 함수 호출
+    console.log(add(5, 3)) // 8
+    console.log(subtract(5, 3)) // 2
+    console.log(multiply(5,3)) // 15
+
+
+    // 왜 출력이 NaN일까?
+    console.log(multiply(5)) // NaN
+    // 두번째 인자를 주지 않았기 때문이다. a=5, b=undefined --> 5*undefined --> NaN (숫자가 아님)
+
+
+
+  </script>
+</body>
+
+</html>
