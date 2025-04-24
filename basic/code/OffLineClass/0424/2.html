@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .font-crimson {
+      color: crimson;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="heading">Hover me!</h1>
+  <h2 class="sub-heading">Double Click me!</h2>
+  <p class="contents">Lorem ipsum dolor sit amet consectetur</p>
+
+  <script>
+    const randomTexts = [
+      'Lorem ipsum dolor sit amet consectetu',
+      'adipisicing elit. Repellendus delectus quam',
+      'similique quo ipsam maxime totam alias',
+      'quibusdam repudiandae voluptas dicta',
+      'voluptas voluptatibus exercitationem officiis'
+    ]
+
+    // 호버시 글자 바뀌는 기능
+    const h1 = document.querySelector('h1')
+    const h2 = document.querySelector('.heading')  // 해당 방식이 더 좋음 (중첨될 가능성이 적으니까)
+
+    h1.addEventListener('mouseover',function(){
+      h1.textContent = 'i am being hovered'
+    })
+
+    h1.addEventListener('mouseout',function(){
+      h1.textContent = 'hover me'
+    })
+
+
+    // 더블 클릭 시 바뀌는 
+    const dd_h1 = document.querySelector('.sub-heading')
+    dd_h1.addEventListener('dblclick', function(){
+
+      // 그냥 토글이 짧으니까 좋으니까 토글 쓰는 거임 
+      dd_h1.classList.toggle('font-crimson')
+      
+      // if (dd_h1.classList.contains('font-crimson')) {
+      //   dd_h1.classList.remove('font-crimson')
+      // } else {
+      //   dd_h1.classList.add('font-crimson')
+      // }
+
+    })
+
+
+    // 마우스 휠 반응
+    const contents = document.querySelector('.contents')
+
+    contents.addEventListener('wheel',function(){
+      const index = Math.floor(Math.random()*5)
+      // console.log(randomTexts[index])
+      // Math.random --> 0이상 1미만의 부동소수점 숫자 생성
+        // 그래서 랜던값에 5를 곱하면 0이상 5미만의 값이 나옴
+        // Math.floor(Math.random() * 10) --> 0이상 9이하의 정수 나옴
+        // Math.floor(Math.random() * 10)+1 --> 1이상 10이하의 정수가 나옴 
+      console.log(Math.random())
+      contents.textContent = randomTexts[index]
+    })
+    
+  </script>
+</body>
+
+</html>

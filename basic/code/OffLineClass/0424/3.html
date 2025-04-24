@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .bg-color {
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin: 20px;
+    }
+
+    .fs-2 {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h2>Input</h2>
+    <input type="text" class="text-input">
+    <span class="warning" style="color: red; display: none;">글자 수를 초과하였습니다.</span>
+    <p></p>
+  </div>
+  <div>
+    <h2>Color</h2>
+    <input type="text" class="color-input">
+  </div>
+
+  <script>
+    // 아래에 코드 작성
+    const input = document.querySelector('.text-input')
+    const p = document.querySelector('p')
+    console.log(input)
+    // input.addEventListener('이벤트명',콜백함수)
+    input.addEventListener('input', function(event){
+      const warning = document.querySelector('.warning')
+      p.textContent = event.currentTarget.value
+      if(p.textContent.length > 5){
+        console.log(warning)
+        warning.style.display = 'block'
+        p.style.display = 'none'
+      } else {
+        warning.style.display = 'none'
+        p.style.display = 'block'
+      }
+    })
+
+    input.addEventListener('focusin', function(){
+      console.log("hello")
+      p.classList.add('fs-2')
+      p.classList.add('bg-color')
+    })
+    input.addEventListener('focusout', function(){
+      p.classList.remove('fs-2')
+      p.classList.remove('bg-color')
+    })
+
+
+    const color = document.querySelector('.color-input')
+    // color.addEventListener('input',function(){
+    //   console.log(color.value)
+    //   p.style.color = color.value
+    // })
+    
+    //위의 코드대로 쓰면 red를 입력하고 이어서 redsfsdfsd라고 쳐도 계속 색상이 빨간색으로유지돼.
+    // 근데 나는 유효한 색상 단어를 입력했을때만 그게 적용되길바래서 --> 아래와같이 css.support를 쓰면 구현 가능
+    color.addEventListener('input', function () {
+    const val = color.value
+    if (CSS.supports('color', val)) {
+      p.style.color = val
+    } else {
+      p.style.color = 'black' // 또는 기본 색상으로 초기화
+      }
+    })
+
+  </script>
+</body>
+
+</html>
