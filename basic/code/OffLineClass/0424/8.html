@@ -1,0 +1,99 @@
+const scissorsButton = document.querySelector('#scissors-button')
+const rockButton = document.querySelector('#rock-button')
+const paperButton = document.querySelector('#paper-button')
+const modal = document.querySelector('.modal')
+const modalContent = document.querySelector('.modal-content')
+
+modal.addEventListener('click', event => {
+  modal.style.display = 'none'
+})
+
+let c1 = 0
+let c2 = 0
+
+function play(p1,p2){
+  if(p1 === 'scissors'){
+    if(p2 === 'rock'){
+      c2 += 1
+      return 2
+    } else if (p2 === 'paper'){
+      c1 += 1
+      return 1
+    }
+  } else if (p1 === 'rock'){
+    if(p2 === 'scissors'){
+      c1 += 1
+      return 1
+    } else if (p2 === 'paper'){
+      c2 += 1
+      return 2
+    } else {
+      if(p2 === 'rock'){
+        c1 += 1
+        return 1
+      } else if (p2 === 'scissors'){
+        c2 += 1
+        return 2
+      }
+    }
+  }
+
+  return 0
+}
+
+
+const buttonClick = choice => event => {
+  scissorsButton.disabled = true
+  rockButton.disabled = true
+  paperButton.disabled = true
+
+  console.log(choice)
+
+  const cases = ['scissors','rock','paper']
+
+  const index = Math.floor(Math.random() * 3)
+
+  const result = play(choice, cases[index])
+
+  const p1img = document.querySelector('#player1-img')
+  const p2img = document.querySelector('#player2-img')
+
+  p1img.src = `./img/${choice}.png`
+
+  let i = index + 1
+  const rotate = () => {
+    i = (i + 1) % 3
+    p2img.src = `./img/${cases[i]}.png`
+  }
+
+  const timerId = setInterval(rotate,500)
+
+  setTimeout(() => {
+    clearInterval(timerId)
+
+    const countA = document.querySelector('.countA')
+    const countB = document.querySelector('.countB')
+
+    countA.innerText = c1
+    countB.innerText = c2
+
+    p2img.src = `./img/${cases[index]}.png`
+
+    modalContent.innerText = result ? `p ${result} win` : '비겼다'
+    modal.style.display = 'flex'
+
+
+    scissorsButton.disabled = false
+    rockButton.disabled = false
+    paperButton.disabled = false
+
+
+  },3000)
+
+
+} 
+
+
+scissorsButton.addEventListener('click',buttonClick('scissors'))
+rockButton.addEventListener('click',buttonClick('rock'))
+paperButton.addEventListener('click',buttonClick('paper'))
