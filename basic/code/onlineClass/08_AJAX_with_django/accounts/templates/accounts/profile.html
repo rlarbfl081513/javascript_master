@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>{{ person.username }}님의 프로필</h1>
+  <div> 
+    <div>
+      팔로잉 : <span id="followings-count">{{ person.followings.all|length }}</span> / 
+      팔로워 : <span id="followers-count">{{ person.followers.all|length }}</span>
+    </div>
+    {% if request.user != person %}
+      <div>
+        
+        <!-- action & method는 날려준다 -->
+        <!-- <form id="follow-form" action="{% url 'accounts:follow' person.pk %}" method="POST"> -->
+        <form id="follow-form">
+          {% csrf_token %}
+          {% if request.user in person.followers.all %}
+            <input id='follow-button' type="submit" value="Unfollow">
+          {% else %}
+            <input id='follow-button' type="submit" value="Follow">
+          {% endif %}
+        </form>
+    </div>
+    {% endif %}
+  </div>  
+  <hr>
+  <div>
+    <h2>{{ person.username }}가 작성한 게시글</h2>
+    {% for article in person.article_set.all %}
+      <div>{{ article.title }}</div>
+    {% endfor %}
+    <hr>
+    <h2>{{ person.username }}가 작성한 댓글</h2> 
+    {% for comment in person.comment_set.all %} 
+      <div>{{ comment.content }}</div> 
+    {% endfor %}
+    
+    <hr>
+    <h2>{{ person.username }}가 좋아요한 게시글</h2> 
+    {% for article in person.like_articles.all %} 
+      <div>{{ article.title }}</div> 
+    {% endfor %}
+  </div>
+  <!-- axios cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 조작하고자하는 대상  form태그가 누군지 명확하도록 id를 붙여준다.
+    const followform = document.querySelector('#follow-form')
+    // csrf 토큰 정보를 가져온다.
+    // name이 csrfmiddlewaretoken인 어떤 요소를 가져와서 그요소의 벨유만 봅아서 쓴다.
+      // csrftoken 이 변수에 난수값이 할당이 되는 거임 
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    // 현재 프로필 주인의 팔로워 수를 보여주는 span tag
+    const followerCountSpan = document.querySelector('#followers-count')
+    const followbtn = document.querySelector('#follow-button')
+    // 이 follow용 form에 submit 이벤트가 발생하면 
+    followform.addEventListener('submit',function(event){
+      // 내 서버에 follow post 요청을 보낼 것이다.
+      // 원래 form은 submit이 발생하면 하던 일이 있었다.
+        // action에 지정된 위치로 method에 지정된 방식으로 자신이 가진 인풋들의 name&value를 데이터로 요청보내는 것을 했다.
+      event.preventDefault()  // form의 기존 이벤트를 막는다. 새로고침이 되는걸 막는다.
+
+      // action에 적혀있던 경로롤 method에 적혀있던 방식으로 요청을 axios로 보낸다.
+        // axios는 http 요청을 만들고 응답을 처리하는데 사용되는 자바스트립트 라이브러리
+      axios({
+        url:"{% url 'accounts:follow' person.pk %}",
+        method: 'POST',
+        // ajax로 진행할떄도 똑같이 csrf를 보내야한다. 아래와 같이 처리
+        headers: {'X-CSRFToken': csrftoken}, // 너가 받아온 그 난수값이 할당된 변수값을 같이 보내라
+      })
+      // 성공했을때 
+      .then((response) => {
+        // follow 요청을 담당하는 url로 post 요청이 가고
+        // follow 담당 view함수가 실행되어서
+        // 적절한 if문을 통과한후, 실제 follow기능이 실행되고
+        // profile로 redirect되어서
+        // profile view 함수가 profile.html 파일을 반환
+        // 반환된 html 파일의 내용을 console.log 출력
+        console.log(response.data) // 응답 데이터로 html을 줌
+        // 하지만 우리가 필요한건 상대방의 팔로워수, 나에게 보여질 follow버튼에 어떤 값이 적힐지에 대한 결과가 필요하기에
+        // 이걸 json
+        const follower_cnt = response.data.follower_cnt
+        followerCountSpan.textContent = follower_cnt
+        const isfollow = response.data.is_follow
+        // isFollow의 값이 true면  -> unfollow false면? follow
+        followbtn.value = isfollow ? 'unfollow' : 'follow'
+      })
+      // 실패하면
+      .catch((err) => {
+        console.log(err)
+      })
+    })
+  </script>
+
+</body>
+</html>
